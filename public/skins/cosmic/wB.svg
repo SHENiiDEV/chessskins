@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+    <defs>
+        <linearGradient id="grad-cosmic-white" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#312e81" />
+            <stop offset="50%" stop-color="#1e1b4b" />
+            <stop offset="100%" stop-color="#4338ca" />
+        </linearGradient>
+        <linearGradient id="grad-cosmic-black" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#581c87" />
+            <stop offset="50%" stop-color="#09090b" />
+            <stop offset="100%" stop-color="#701a75" />
+        </linearGradient>
+        <filter id="cosmic-aura-w-B">
+            <feGaussianBlur stdDeviation="2" result="glow" />
+            <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+    <g fill="url(#grad-cosmic-white)" stroke="#818cf8" stroke-width="3" filter="url(#cosmic-aura-w-B)" stroke-linejoin="round" stroke-linecap="round">
+        <circle cx="50" cy="18" r="4" /><path d="M50 24 C38 24, 34 38, 34 50 C34 60, 42 66, 44 74 L56 74 C58 66, 66 60, 66 50 C66 38, 62 24, 50 24 Z" /><path d="M43 38 L58 48" stroke-width="3" stroke-linecap="round" fill="none" /><rect x="30" y="74" width="40" height="8" rx="2" /><rect x="25" y="82" width="50" height="8" rx="2" />
+    </g>
+    <!-- Constellation stars -->
+    <polygon points="50,22 52,27 57,27 53,30 55,35 50,32 45,35 47,30 43,27 48,27" fill="#c7d2fe" opacity="0.8" />
+    <circle cx="42" cy="56" r="1.5" fill="#c7d2fe" opacity="0.9" />
+    <circle cx="58" cy="52" r="1.5" fill="#c7d2fe" opacity="0.9" />
+    <line x1="42" y1="56" x2="58" y2="52" stroke="#c7d2fe" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.5" />
+    <g stroke="#c7d2fe">
+        <circle cx="50" cy="34" r="2" fill="white" opacity="0.5" />
+    </g>
+</svg>
