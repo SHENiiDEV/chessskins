@@ -47,10 +47,18 @@ export interface Transaction {
     created_at: string;
 }
 
+export interface CompanyInfo {
+    name: string;
+    number: string;
+    addr: string;
+    email: string;
+}
+
 export interface PageProps {
     auth: {
         user: User | null;
     };
+    company: CompanyInfo;
     flash: {
         success?: string | null;
         error?: string | null;

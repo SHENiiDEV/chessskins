@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TopUpReceiptMail;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -111,6 +114,12 @@ class PaymentController extends Controller
                 'payment_gateway_reference' => $reference,
             ]);
         });
+
+        try {
+            Mail::to($user->email)->send(new TopUpReceiptMail($user, $selectedPack, $reference));
+        } catch (\Throwable $e) {
+            Log::error('Failed to send topup receipt email to '.$user->email.': '.$e->getMessage());
+        }
 
         return redirect()->route('shop')->with(
             'success',

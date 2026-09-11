@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\Skin;
 use App\Models\User;
 use App\Services\CountryService;
@@ -9,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -79,6 +82,12 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
+
+        try {
+            Mail::to($user->email)->send(new WelcomeMail($user));
+        } catch (\Throwable $e) {
+            Log::error('Failed to send welcome email to '.$user->email.': '.$e->getMessage());
+        }
 
         return redirect()->route('play')->with('success', 'Welcome to ChessSkins! 200 bonus Coins have been credited to your wallet.');
     }

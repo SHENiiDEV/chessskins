@@ -55,6 +55,12 @@ class HandleInertiaRequests extends Middleware
                     'active_board_slug' => $user->activeBoard?->slug ?? 'board-classic',
                 ] : null,
             ],
+            'company' => [
+                'name' => config('company.name'),
+                'number' => config('company.number'),
+                'addr' => config('company.addr'),
+                'email' => config('company.email'),
+            ],
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),

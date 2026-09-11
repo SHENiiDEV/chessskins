@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import Logo from '@/Components/Logo';
-import { ShieldCheck, Mail, Globe, Sparkles } from 'lucide-react';
+import { ShieldCheck, Mail, Globe, Sparkles, Building2, MapPin } from 'lucide-react';
+import { PageProps } from '@/types';
 
 export default function Footer() {
+    const { company } = usePage<PageProps>().props;
     return (
         <footer className="border-t border-slate-800/80 bg-slate-950 text-slate-400 py-12 px-4 sm:px-6 lg:px-8 mt-auto">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -70,28 +72,32 @@ export default function Footer() {
 
                 {/* Contacts & Support */}
                 <div>
-                    <h3 className="text-sm font-semibold text-slate-200 tracking-wider uppercase mb-3">Support</h3>
+                    <h3 className="text-sm font-semibold text-slate-200 tracking-wider uppercase mb-3">Operator & Support</h3>
                     <ul className="space-y-2 text-sm">
                         <li className="flex items-center gap-2">
-                            <Mail className="w-4 h-4 text-amber-400" />
-                            <a href="mailto:support@chessskins.io" className="hover:text-amber-400 transition-colors">
-                                support@chessskins.io
+                            <Mail className="w-4 h-4 text-amber-400 shrink-0" />
+                            <a href={`mailto:${company?.email || 'info@chess-skins.com'}`} className="hover:text-amber-400 transition-colors truncate">
+                                {company?.email || 'info@chess-skins.com'}
                             </a>
                         </li>
-                        <li className="flex items-center gap-2">
-                            <Globe className="w-4 h-4 text-cyan-400" />
-                            <span>Global CDN & Edge Servers</span>
-                        </li>
-                        <li className="flex items-center gap-2 text-xs text-slate-500 pt-2">
-                            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                            <span>v1.0.0 Pro Production Build</span>
-                        </li>
+                        {company?.number && (
+                            <li className="flex items-center gap-2 text-xs text-slate-400">
+                                <Building2 className="w-4 h-4 text-cyan-400 shrink-0" />
+                                <span>Reg. No: <strong className="text-slate-300">{company.number}</strong></span>
+                            </li>
+                        )}
+                        {company?.addr && (
+                            <li className="flex items-start gap-2 text-xs text-slate-500 pt-1">
+                                <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                                <span className="leading-relaxed">{company.addr}</span>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>
 
             <div className="max-w-7xl mx-auto pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-                <p>© {new Date().getFullYear()} ChessSkins Platform. All rights reserved.</p>
+                <p>© {new Date().getFullYear()} {company?.name || 'Chess Skins Ltd'}. All rights reserved.</p>
                 <div className="flex space-x-6">
                     <Link href="/terms" className="hover:text-slate-400 transition">Terms & Conditions</Link>
                     <Link href="/privacy" className="hover:text-slate-400 transition">Privacy Policy</Link>
