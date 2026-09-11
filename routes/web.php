@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BotController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShopController;
@@ -43,4 +44,7 @@ Route::middleware('auth')->group(function () {
     // Billing & Top-up
     Route::get('/topup', [PaymentController::class, 'topup'])->name('topup');
     Route::post('/topup/checkout', [PaymentController::class, 'checkout'])->name('topup.checkout');
+
+    // Invoices
+    Route::get('/invoices/{transaction}/download', [InvoiceController::class, 'download'])->name('invoices.download');
 });

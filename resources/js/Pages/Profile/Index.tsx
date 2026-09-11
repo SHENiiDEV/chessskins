@@ -16,7 +16,8 @@ import {
     Crown,
     Grid,
     ArrowUpRight,
-    ArrowDownLeft
+    ArrowDownLeft,
+    FileDown
 } from 'lucide-react';
 import { getBoardTheme } from '@/utils/chessSkins';
 import { User, Skin, Transaction } from '@/types';
@@ -228,6 +229,7 @@ export default function Profile({ user, ownedSkins, transactions }: ProfileProps
                                             <th className="pb-3 font-semibold">Amount</th>
                                             <th className="pb-3 font-semibold">Status</th>
                                             <th className="pb-3 font-semibold">Gateway Reference</th>
+                                            <th className="pb-3 font-semibold text-center">Invoice</th>
                                             <th className="pb-3 font-semibold text-right">Date</th>
                                         </tr>
                                     </thead>
@@ -265,6 +267,22 @@ export default function Profile({ user, ownedSkins, transactions }: ProfileProps
                                                 </td>
                                                 <td className="py-3.5 text-slate-400 truncate max-w-[160px]">
                                                     {t.payment_gateway_reference || '—'}
+                                                </td>
+                                                <td className="py-3.5 text-center font-sans">
+                                                    {t.type === 'topup' && t.status === 'completed' ? (
+                                                        <a
+                                                            href={`/invoices/${t.id}/download`}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-cyan-400 font-sans text-[11px] font-bold transition group shadow-sm"
+                                                            title="Download Official Tax Invoice (PDF)"
+                                                        >
+                                                            <FileDown className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
+                                                            <span>PDF</span>
+                                                        </a>
+                                                    ) : (
+                                                        <span className="text-slate-600 text-[11px]">—</span>
+                                                    )}
                                                 </td>
                                                 <td className="py-3.5 text-slate-400 text-right font-sans">
                                                     {new Date(t.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}

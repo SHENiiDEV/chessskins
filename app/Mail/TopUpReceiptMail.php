@@ -2,7 +2,9 @@
 
 namespace App\Mail;
 
+use App\Models\Transaction;
 use App\Models\User;
+use App\Services\InvoiceService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -10,6 +12,7 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class TopUpReceiptMail extends Mailable
 {
@@ -23,7 +26,8 @@ class TopUpReceiptMail extends Mailable
     public function __construct(
         public User $user,
         public array $package,
-        public string $reference
+        public string $reference,
+        public ?Transaction $transaction = null
     ) {}
 
     /**
@@ -51,6 +55,7 @@ class TopUpReceiptMail extends Mailable
                 'user' => $this->user,
                 'package' => $this->package,
                 'reference' => $this->reference,
+                'transaction' => $this->transaction,
                 'company' => config('company'),
                 'shopUrl' => url('/shop'),
                 'profileUrl' => url('/profile'),
@@ -65,6 +70,28 @@ class TopUpReceiptMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        try {
+            $invoiceService = app(InvoiceService::class);
+            $tx = $this->transaction ?? new Transaction([
+                'user_id' => $this->user->id,
+                'amount' => $this->package['coins'],
+                'type' => 'topup',
+                'status' => 'completed',
+                'payment_gateway_reference' => $this->reference,
+                'created_at' => now(),
+            ]);
+            $tx->setRelation('user', $this->user);
+
+            $pdfOutput = $invoiceService->generatePdfOutput($tx, $this->package);
+
+            return [
+                Attachment::fromData(fn () => $pdfOutput, "invoice_{$this->reference}.pdf")
+                    ->withMime('application/pdf'),
+            ];
+        } catch (\Throwable $e) {
+            Log::error('Failed to attach invoice PDF to receipt email: '.$e->getMessage());
+
+            return [];
+        }
     }
 }

@@ -81,6 +81,16 @@
                                 </tr>
                             </table>
 
+                            <!-- PDF Invoice Attachment Callout -->
+                            <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: rgba(56, 189, 248, 0.08); border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 12px; margin-bottom: 24px;">
+                                <tr>
+                                    <td style="padding: 14px 18px; font-size: 12px; color: #cbd5e1; line-height: 18px;">
+                                        <strong style="color: #38bdf8;">📎 Official PDF Tax Invoice Attached:</strong><br>
+                                        A formal tax invoice (<code style="color: #f1f5f9;">invoice_{{ $reference }}.pdf</code>) has been generated and attached to this email for your accounting records.
+                                    </td>
+                                </tr>
+                            </table>
+
                             <!-- Action Buttons -->
                             <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>

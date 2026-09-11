@@ -102,11 +102,12 @@ class PaymentController extends Controller
         $user = $request->user();
         $reference = 'PG-STRIPE-'.strtoupper(Str::random(10));
 
-        DB::transaction(function () use ($user, $selectedPack, $reference) {
+        $transaction = null;
+        DB::transaction(function () use ($user, $selectedPack, $reference, &$transaction) {
             $user->wallet_balance += $selectedPack['coins'];
             $user->save();
 
-            Transaction::create([
+            $transaction = Transaction::create([
                 'user_id' => $user->id,
                 'amount' => $selectedPack['coins'],
                 'type' => 'topup',
@@ -116,7 +117,7 @@ class PaymentController extends Controller
         });
 
         try {
-            Mail::to($user->email)->send(new TopUpReceiptMail($user, $selectedPack, $reference));
+            Mail::to($user->email)->send(new TopUpReceiptMail($user, $selectedPack, $reference, $transaction));
         } catch (\Throwable $e) {
             Log::error('Failed to send topup receipt email to '.$user->email.': '.$e->getMessage());
         }
