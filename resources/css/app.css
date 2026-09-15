@@ -17,3 +17,11 @@
     --color-brass-deep: #8A6F35;
 }
 
+/* Utilities for smooth touch and scroll on mobile */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

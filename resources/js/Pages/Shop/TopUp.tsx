@@ -68,23 +68,23 @@ export default function TopUp({ packages, billingData }: TopUpProps) {
         <AppLayout>
             <Head title="Top Up Coins" />
 
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6 sm:space-y-10">
                 {/* Header */}
-                <div className="text-center max-w-2xl mx-auto space-y-3">
+                <div className="text-center max-w-2xl mx-auto space-y-2 sm:space-y-3">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold">
                         <Coins className="w-3.5 h-3.5 text-amber-400" />
                         <span>Instant Wallet Top-Up</span>
                     </div>
-                    <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                    <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
                         Purchase Coins
                     </h1>
-                    <p className="text-slate-400 text-sm leading-relaxed">
+                    <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                         Select a package. Your KYC billing information from your profile will be securely passed to the payment gateway to guarantee high transaction authorization rates.
                     </p>
                 </div>
 
                 {/* Package Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {packages.map((pack) => {
                         const isSelected = selectedPackId === pack.id;
 
@@ -92,7 +92,7 @@ export default function TopUp({ packages, billingData }: TopUpProps) {
                             <div
                                 key={pack.id}
                                 onClick={() => handleSelectPack(pack.id)}
-                                className={`rounded-3xl p-6 cursor-pointer border transition-all duration-200 relative flex flex-col justify-between ${
+                                className={`rounded-2xl sm:rounded-3xl p-5 sm:p-6 cursor-pointer border transition-all duration-200 relative flex flex-col justify-between active:scale-98 ${
                                     isSelected
                                         ? 'bg-gradient-to-b from-amber-500/15 via-slate-900 to-slate-950 border-amber-500 shadow-xl shadow-amber-500/10 scale-[1.02]'
                                         : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
@@ -138,15 +138,15 @@ export default function TopUp({ packages, billingData }: TopUpProps) {
                 </div>
 
                 {/* Checkout & Billing Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
                     {/* Left: Billing Data Summary (from User profile) */}
-                    <div className="lg:col-span-6 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-6">
+                    <div className="lg:col-span-6 p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-900/80 border border-slate-800 space-y-4 sm:space-y-6">
                         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                             <div className="flex items-center gap-2 text-sm font-bold text-white">
                                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                                 <span>Billing Data from Your Profile</span>
                             </div>
-                            <span className="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            <span className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                                 KYC Verified
                             </span>
                         </div>
@@ -155,7 +155,7 @@ export default function TopUp({ packages, billingData }: TopUpProps) {
                             These billing coordinates are passed to the acquiring bank with the authorization request to prevent transaction declines:
                         </p>
 
-                        <div className="grid grid-cols-2 gap-4 text-xs">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
                             <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
                                 <span className="text-slate-500 block mb-1">Payer Name:</span>
                                 <span className="font-semibold text-white">
@@ -170,27 +170,27 @@ export default function TopUp({ packages, billingData }: TopUpProps) {
                                 </span>
                             </div>
 
-                            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 col-span-2">
+                            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 col-span-1 sm:col-span-2">
                                 <span className="text-slate-500 block mb-1">Registered Address:</span>
                                 <span className="font-semibold text-white">
                                     {billingData.address_line_1}, {billingData.city}, {billingData.country} ({billingData.post_code})
                                 </span>
                             </div>
 
-                            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 col-span-2 flex items-center justify-between">
+                            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 col-span-1 sm:col-span-2 flex items-center justify-between">
                                 <span className="text-slate-500">Phone Number:</span>
                                 <span className="font-semibold text-white">{billingData.phone || '—'}</span>
                             </div>
                         </div>
 
                         <div className="text-[11px] text-slate-500 flex items-center gap-1.5 pt-2">
-                            <Lock className="w-3.5 h-3.5 text-slate-400" />
+                            <Lock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                             <span>Transmitted over TLS 1.3 encryption with end-to-end tokenization.</span>
                         </div>
                     </div>
 
                     {/* Right: Payment Gateway Card Form */}
-                    <div className="lg:col-span-6 p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 shadow-2xl space-y-6">
+                    <div className="lg:col-span-6 p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 shadow-2xl space-y-4 sm:space-y-6">
                         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                             <div className="flex items-center gap-2 text-sm font-bold text-white">
                                 <CreditCard className="w-4 h-4 text-amber-400" />

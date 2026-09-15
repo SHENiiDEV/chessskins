@@ -112,6 +112,9 @@ export default function Play({
     // Mode: 'scenario' | 'freeplay'
     const [gameMode, setGameMode] = useState<'scenario' | 'freeplay'>('scenario');
 
+    // Mobile tactical tab: 'moves' | 'console' | 'skins'
+    const [mobileActiveTab, setMobileActiveTab] = useState<'moves' | 'console' | 'skins'>('moves');
+
     // Free Play settings & state
     const [difficulty, setDifficulty] = useState<AIDifficulty>('club');
     const [playerColor, setPlayerColor] = useState<'white' | 'black'>('white');
@@ -583,32 +586,34 @@ export default function Play({
                     style={{ backgroundColor: boardTheme.glow }}
                 />
 
-                <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
+                <div className="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8 relative z-10 space-y-4 sm:space-y-6">
                     {/* TOP COMMAND BAR */}
-                    <div className="flex flex-wrap items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
+                    <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 p-2.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
                         {/* Mode Switcher Tabs */}
-                        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-950/80 border border-slate-800">
+                        <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-950/80 border border-slate-800">
                             <button
                                 onClick={() => switchMode('scenario')}
-                                className={`px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                                className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                                     gameMode === 'scenario'
                                         ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                                         : 'text-slate-400 hover:text-white'
                                 }`}
                             >
                                 <BookOpen className="w-3.5 h-3.5" />
-                                <span>Opening Book</span>
+                                <span className="hidden min-[400px]:inline">Opening Book</span>
+                                <span className="min-[400px]:hidden">Book</span>
                             </button>
                             <button
                                 onClick={() => switchMode('freeplay')}
-                                className={`px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                                className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                                     gameMode === 'freeplay'
                                         ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
                                         : 'text-slate-400 hover:text-white'
                                 }`}
                             >
                                 <Swords className="w-3.5 h-3.5" />
-                                <span>Free Play vs AI</span>
+                                <span className="hidden min-[400px]:inline">Free Play vs AI</span>
+                                <span className="min-[400px]:hidden">Free Play</span>
                             </button>
                         </div>
 
@@ -625,11 +630,11 @@ export default function Play({
                         </div>
 
                         {/* Tactical Actions Toolbar */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
                             {/* Audio Mute/Unmute */}
                             <button
                                 onClick={handleToggleAudio}
-                                className={`p-2 rounded-xl border transition-all cursor-pointer active:scale-95 ${
+                                className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl border transition-all cursor-pointer active:scale-95 ${
                                     soundMuted
                                         ? 'bg-slate-950 border-rose-500/40 text-rose-400 hover:border-rose-500'
                                         : 'bg-slate-950 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
@@ -642,7 +647,7 @@ export default function Play({
                             {/* Flip Board */}
                             <button
                                 onClick={() => setIsFlipped(!isFlipped)}
-                                className="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer active:scale-95"
+                                className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer active:scale-95"
                                 title="Flip Board Perspective"
                             >
                                 <RotateCw className="w-4 h-4" />
@@ -652,7 +657,7 @@ export default function Play({
                             <button
                                 onClick={undoMove}
                                 disabled={moveLog.length === 0 || botThinking}
-                                className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 disabled:opacity-40 disabled:pointer-events-none text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
+                                className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 disabled:opacity-40 disabled:pointer-events-none text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1 sm:gap-1.5 transition-all cursor-pointer active:scale-95"
                                 title="Takeback Move"
                             >
                                 <Undo2 className="w-3.5 h-3.5 text-amber-400" />
@@ -662,7 +667,7 @@ export default function Play({
                             {/* Copy PGN */}
                             <button
                                 onClick={copyPGN}
-                                className="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer active:scale-95"
+                                className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer active:scale-95"
                                 title="Copy PGN Notation"
                             >
                                 {pgnCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -671,11 +676,12 @@ export default function Play({
                             {/* New Game */}
                             <button
                                 onClick={restartGame}
-                                className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-white flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
+                                className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-white flex items-center gap-1 sm:gap-1.5 transition-all cursor-pointer active:scale-95"
                                 title="Reset to start position"
                             >
                                 <RotateCcw className="w-3.5 h-3.5 text-cyan-400" />
-                                <span>New Game</span>
+                                <span className="hidden sm:inline">New Game</span>
+                                <span className="sm:hidden">New</span>
                             </button>
 
                             {/* Resign (Free play only) */}
@@ -683,7 +689,7 @@ export default function Play({
                                 <button
                                     onClick={resignGame}
                                     disabled={historySAN.length === 0}
-                                    className="px-3 py-2 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 border border-rose-500/30 text-xs font-bold text-rose-300 flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-40 disabled:pointer-events-none active:scale-95"
+                                    className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-rose-950/40 hover:bg-rose-900/60 border border-rose-500/30 text-xs font-bold text-rose-300 flex items-center gap-1 sm:gap-1.5 transition-all cursor-pointer disabled:opacity-40 disabled:pointer-events-none active:scale-95"
                                     title="Resign game"
                                 >
                                     <Flag className="w-3.5 h-3.5 text-rose-400" />
@@ -696,64 +702,64 @@ export default function Play({
                     {/* MAIN ARENA GRID */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                         {/* LEFT COLUMN: THE GRAND CHESSBOARD & PLAYER HUDs */}
-                        <div className="lg:col-span-7 xl:col-span-7 flex flex-col items-center">
-                            <div className="w-full max-w-[620px] space-y-3">
+                        <div className="lg:col-span-7 xl:col-span-7 flex flex-col items-center w-full">
+                            <div className="w-full max-w-[620px] space-y-2.5 sm:space-y-3">
                                 {/* TOP OPPONENT HUD CARD */}
-                                <div className="p-3 sm:p-4 rounded-2xl bg-slate-900/90 border border-white/10 shadow-lg backdrop-blur-md flex items-center justify-between transition-all">
-                                    <div className="flex items-center gap-3">
-                                        <div className="relative">
-                                            <div className="w-10 h-10 rounded-xl bg-indigo-950 border border-indigo-500/40 flex items-center justify-center font-bold text-indigo-300 shadow-inner">
-                                                <Bot className="w-5 h-5 text-indigo-400" />
+                                <div className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/90 border border-white/10 shadow-lg backdrop-blur-md flex items-center justify-between transition-all">
+                                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                                        <div className="relative shrink-0">
+                                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-indigo-950 border border-indigo-500/40 flex items-center justify-center font-bold text-indigo-300 shadow-inner">
+                                                <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
                                             </div>
                                             {botThinking && (
-                                                <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-amber-400 animate-ping" />
+                                                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-400 animate-ping" />
                                             )}
                                         </div>
 
-                                        <div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="font-black text-sm text-white tracking-wide">
+                                        <div className="min-w-0">
+                                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                                <span className="font-black text-xs sm:text-sm text-white tracking-wide truncate">
                                                     {gameMode === 'scenario'
                                                         ? 'Book Master Bot'
-                                                        : `Stockfish AI (${difficulty.toUpperCase()})`}
+                                                        : `Stockfish (${difficulty.toUpperCase()})`}
                                                 </span>
-                                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 uppercase">
+                                                <span className="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 uppercase shrink-0">
                                                     {playerColor === 'white' ? 'Black' : 'White'}
                                                 </span>
                                             </div>
 
                                             {/* Status / Captured Pieces */}
-                                            <div className="flex items-center gap-2 mt-1">
+                                            <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1 text-[11px] sm:text-xs">
                                                 {botThinking ? (
-                                                    <span className="text-xs font-semibold text-amber-400 flex items-center gap-1 animate-pulse">
-                                                        <Zap className="w-3 h-3" />
-                                                        <span>Computing move...</span>
+                                                    <span className="font-semibold text-amber-400 flex items-center gap-1 animate-pulse truncate">
+                                                        <Zap className="w-3 h-3 shrink-0" />
+                                                        <span>Thinking...</span>
                                                     </span>
                                                 ) : (
-                                                    <span className="text-xs text-slate-400">
-                                                        {isPlayerTurn ? 'Waiting for your move' : 'Making turn...'}
+                                                    <span className="text-slate-400 truncate">
+                                                        {isPlayerTurn ? 'Waiting for move' : 'Making turn...'}
                                                     </span>
                                                 )}
 
                                                 {/* Opponent Captured Pieces */}
                                                 {opponentCapturedPieces.length > 0 && (
-                                                    <div className="flex items-center gap-1 pl-2 border-l border-slate-800">
+                                                    <div className="flex items-center gap-1 pl-1.5 sm:pl-2 border-l border-slate-800 shrink-0">
                                                         {opponentCapturedPieces.map((p, idx) => (
                                                             <span
                                                                 key={idx}
-                                                                className="text-xs text-slate-300 font-mono flex items-center"
+                                                                className="text-[11px] sm:text-xs text-slate-300 font-mono flex items-center"
                                                                 title={`Captured ${p.type.toUpperCase()}`}
                                                             >
                                                                 {p.type.toUpperCase()}
                                                                 {p.count > 1 && (
-                                                                    <span className="text-[10px] text-slate-500 font-bold">
+                                                                    <span className="text-[9px] sm:text-[10px] text-slate-500 font-bold">
                                                                         x{p.count}
                                                                     </span>
                                                                 )}
                                                             </span>
                                                         ))}
                                                         {opponentAdvantage > 0 && (
-                                                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                                                            <span className="text-[9px] sm:text-[10px] font-bold px-1 sm:px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
                                                                 +{opponentAdvantage}
                                                             </span>
                                                         )}
@@ -764,11 +770,11 @@ export default function Play({
                                     </div>
 
                                     {/* Opponent Badge */}
-                                    <div className="text-right">
-                                        <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                            {gameMode === 'scenario' ? 'Opening Book' : 'Rating'}
+                                    <div className="text-right shrink-0 pl-2">
+                                        <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                                            {gameMode === 'scenario' ? 'Opening' : 'Rating'}
                                         </div>
-                                        <div className="text-xs font-mono font-bold text-slate-200">
+                                        <div className="text-xs font-mono font-bold text-slate-200 truncate max-w-[110px] sm:max-w-none">
                                             {gameMode === 'scenario'
                                                 ? selectedScenario.category
                                                 : difficulty === 'master'
@@ -782,12 +788,12 @@ export default function Play({
 
                                 {/* CHESSBOARD WRAPPER WITH LUXURY BEVEL & THEMED GLOW */}
                                 <div
-                                    className="p-3 sm:p-4 rounded-3xl bg-slate-900 border-2 border-white/10 relative transition-shadow duration-700"
+                                    className="p-1 sm:p-4 rounded-2xl sm:rounded-3xl bg-slate-900 border sm:border-2 border-white/10 relative transition-shadow duration-700"
                                     style={{
-                                        boxShadow: `0 0 90px -20px ${boardTheme.glow}35, inset 0 1px 0 rgba(255,255,255,0.1)`,
+                                        boxShadow: `0 0 70px -20px ${boardTheme.glow}35, inset 0 1px 0 rgba(255,255,255,0.1)`,
                                     }}
                                 >
-                                    <div className="rounded-2xl overflow-hidden shadow-2xl">
+                                    <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
                                         <Chessboard
                                             key={`${gameMode}-${currentOrientation}-${activePieceSkin}-${activeBoardSkin}`}
                                             options={{
@@ -799,7 +805,7 @@ export default function Play({
                                                 darkSquareStyle: { backgroundColor: boardTheme.dark },
                                                 lightSquareStyle: { backgroundColor: boardTheme.light },
                                                 boardStyle: {
-                                                    borderRadius: '16px',
+                                                    borderRadius: '12px',
                                                     boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.6)',
                                                 },
                                                 animationDurationInMs: 250,
@@ -819,29 +825,29 @@ export default function Play({
 
                                     {/* Deviation Alert Overlay (Scenario Mode) */}
                                     {deviationError && (
-                                        <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 p-6 rounded-2xl bg-rose-950/95 border-2 border-rose-500 shadow-2xl backdrop-blur-xl text-center space-y-3 z-30 animate-in fade-in zoom-in duration-200">
-                                            <div className="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto">
-                                                <AlertTriangle className="w-6 h-6" />
+                                        <div className="absolute inset-x-4 sm:inset-x-6 top-1/2 -translate-y-1/2 p-4 sm:p-6 rounded-2xl bg-rose-950/95 border-2 border-rose-500 shadow-2xl backdrop-blur-xl text-center space-y-3 z-30 animate-in fade-in zoom-in duration-200">
+                                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto">
+                                                <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6" />
                                             </div>
                                             <div>
-                                                <h3 className="text-lg font-black text-white">Scenario Deviated!</h3>
+                                                <h3 className="text-base sm:text-lg font-black text-white">Scenario Deviated!</h3>
                                                 <p className="text-xs text-rose-200 mt-1 max-w-sm mx-auto">
                                                     {deviationError} Return to the book line or play Free Play mode.
                                                 </p>
                                             </div>
-                                            <div className="flex items-center justify-center gap-3 pt-2">
+                                            <div className="flex items-center justify-center gap-2 sm:gap-3 pt-2">
                                                 <button
                                                     onClick={undoMove}
-                                                    className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition cursor-pointer active:scale-95"
+                                                    className="px-3 sm:px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition cursor-pointer active:scale-95"
                                                 >
-                                                    <Undo2 className="w-4 h-4" />
+                                                    <Undo2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                                     <span>Undo Move</span>
                                                 </button>
                                                 <button
                                                     onClick={() => switchMode('freeplay')}
-                                                    className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs transition cursor-pointer active:scale-95"
+                                                    className="px-3 sm:px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs transition cursor-pointer active:scale-95"
                                                 >
-                                                    Switch to Free Play
+                                                    Free Play
                                                 </button>
                                             </div>
                                         </div>
@@ -849,17 +855,17 @@ export default function Play({
 
                                     {/* Scenario Completion Banner */}
                                     {scenarioCompleted && (
-                                        <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 p-6 rounded-2xl bg-emerald-950/95 border-2 border-emerald-500 shadow-2xl backdrop-blur-xl text-center space-y-3 z-30 animate-in fade-in zoom-in duration-200">
-                                            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-                                                <CheckCircle2 className="w-6 h-6" />
+                                        <div className="absolute inset-x-4 sm:inset-x-6 top-1/2 -translate-y-1/2 p-4 sm:p-6 rounded-2xl bg-emerald-950/95 border-2 border-emerald-500 shadow-2xl backdrop-blur-xl text-center space-y-3 z-30 animate-in fade-in zoom-in duration-200">
+                                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                                                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" />
                                             </div>
                                             <div>
-                                                <h3 className="text-lg font-black text-white">Scenario Mastered!</h3>
+                                                <h3 className="text-base sm:text-lg font-black text-white">Scenario Mastered!</h3>
                                                 <p className="text-xs text-emerald-200 mt-1 max-w-sm mx-auto">
                                                     Flawless execution of «{selectedScenario.name}». Theoretical opening complete!
                                                 </p>
                                             </div>
-                                            <div className="flex items-center justify-center gap-3 pt-2">
+                                            <div className="flex items-center justify-center gap-2 sm:gap-3 pt-2">
                                                 <button
                                                     onClick={restartGame}
                                                     className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition cursor-pointer active:scale-95"
@@ -878,12 +884,12 @@ export default function Play({
 
                                     {/* Free Play Game Over / Victory Modal */}
                                     {freePlayStatus && (
-                                        <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 p-6 rounded-2xl bg-slate-900/95 border-2 border-amber-500 shadow-2xl backdrop-blur-xl text-center space-y-3 z-30 animate-in fade-in zoom-in duration-200">
-                                            <div className="w-14 h-14 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto border border-amber-500/40">
-                                                {freePlayWon ? <Crown className="w-8 h-8" /> : <Award className="w-8 h-8" />}
+                                        <div className="absolute inset-x-4 sm:inset-x-6 top-1/2 -translate-y-1/2 p-5 sm:p-6 rounded-2xl bg-slate-900/95 border-2 border-amber-500 shadow-2xl backdrop-blur-xl text-center space-y-3 z-30 animate-in fade-in zoom-in duration-200">
+                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto border border-amber-500/40">
+                                                {freePlayWon ? <Crown className="w-7 h-7 sm:w-8 sm:h-8" /> : <Award className="w-7 h-7 sm:w-8 sm:h-8" />}
                                             </div>
                                             <div>
-                                                <h3 className="text-xl font-black text-white">{freePlayStatus}</h3>
+                                                <h3 className="text-lg sm:text-xl font-black text-white">{freePlayStatus}</h3>
                                                 {rewardEarned && (
                                                     <div className="inline-flex items-center gap-1.5 px-3 py-1 mt-2 rounded-full bg-amber-500/20 text-amber-300 text-xs font-extrabold border border-amber-500/40">
                                                         <Coins className="w-4 h-4 text-amber-400" />
@@ -891,16 +897,16 @@ export default function Play({
                                                     </div>
                                                 )}
                                             </div>
-                                            <div className="flex items-center justify-center gap-3 pt-2">
+                                            <div className="flex items-center justify-center gap-2 sm:gap-3 pt-2">
                                                 <button
                                                     onClick={() => initFreePlay()}
-                                                    className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition cursor-pointer active:scale-95"
+                                                    className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition cursor-pointer active:scale-95"
                                                 >
                                                     Play Again
                                                 </button>
                                                 <Link
                                                     href="/shop"
-                                                    className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition"
+                                                    className="px-4 py-2 sm:py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition"
                                                 >
                                                     Spend in Store
                                                 </Link>
@@ -910,56 +916,56 @@ export default function Play({
                                 </div>
 
                                 {/* BOTTOM PLAYER HUD CARD */}
-                                <div className="p-3 sm:p-4 rounded-2xl bg-slate-900/90 border border-white/10 shadow-lg backdrop-blur-md flex items-center justify-between transition-all">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center font-bold text-amber-300 shadow-inner">
-                                            <Crown className="w-5 h-5 text-amber-400" />
+                                <div className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/90 border border-white/10 shadow-lg backdrop-blur-md flex items-center justify-between transition-all">
+                                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center font-bold text-amber-300 shadow-inner shrink-0">
+                                            <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
                                         </div>
 
-                                        <div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="font-black text-sm text-white tracking-wide">
+                                        <div className="min-w-0">
+                                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                                <span className="font-black text-xs sm:text-sm text-white tracking-wide truncate">
                                                     {auth.user ? `${auth.user.name} ${auth.user.surname}` : 'You (Challenger)'}
                                                 </span>
-                                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 uppercase">
+                                                <span className="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 uppercase shrink-0">
                                                     {playerColor === 'white' ? 'White' : 'Black'}
                                                 </span>
                                             </div>
 
                                             {/* Status & Captured pieces */}
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="text-xs flex items-center gap-1.5">
+                                            <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1 text-[11px] sm:text-xs">
+                                                <span className="flex items-center gap-1 truncate">
                                                     <span
-                                                        className={`w-2 h-2 rounded-full ${
+                                                        className={`w-2 h-2 rounded-full shrink-0 ${
                                                             isPlayerTurn && !botThinking
                                                                 ? 'bg-emerald-400 animate-pulse'
                                                                 : 'bg-slate-600'
                                                         }`}
                                                     />
                                                     <span className={isPlayerTurn && !botThinking ? 'text-emerald-400 font-bold' : 'text-slate-500'}>
-                                                        {isPlayerTurn && !botThinking ? 'Your turn to move' : 'Opponent thinking...'}
+                                                        {isPlayerTurn && !botThinking ? 'Your turn' : 'Thinking...'}
                                                     </span>
                                                 </span>
 
                                                 {/* User Captured pieces */}
                                                 {userCapturedPieces.length > 0 && (
-                                                    <div className="flex items-center gap-1 pl-2 border-l border-slate-800">
+                                                    <div className="flex items-center gap-1 pl-1.5 sm:pl-2 border-l border-slate-800 shrink-0">
                                                         {userCapturedPieces.map((p, idx) => (
                                                             <span
                                                                 key={idx}
-                                                                className="text-xs text-slate-300 font-mono flex items-center"
+                                                                className="text-[11px] sm:text-xs text-slate-300 font-mono flex items-center"
                                                                 title={`Captured ${p.type.toUpperCase()}`}
                                                             >
                                                                 {p.type.toUpperCase()}
                                                                 {p.count > 1 && (
-                                                                    <span className="text-[10px] text-slate-500 font-bold">
+                                                                    <span className="text-[9px] sm:text-[10px] text-slate-500 font-bold">
                                                                         x{p.count}
                                                                     </span>
                                                                 )}
                                                             </span>
                                                         ))}
                                                         {userAdvantage > 0 && (
-                                                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                                                            <span className="text-[9px] sm:text-[10px] font-bold px-1 sm:px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                                                                 +{userAdvantage}
                                                             </span>
                                                         )}
@@ -970,20 +976,330 @@ export default function Play({
                                     </div>
 
                                     {/* Active Skin & Board Indicators */}
-                                    <div className="text-right">
-                                        <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                            Equipped Setup
+                                    <div className="text-right shrink-0 pl-2">
+                                        <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                                            Equipped
                                         </div>
-                                        <div className="text-xs font-bold text-amber-300 flex items-center justify-end gap-1.5">
-                                            <span>{currentPieceSkinInfo?.name || activePieceSkin}</span>
+                                        <div className="text-xs font-bold text-amber-300 flex items-center justify-end gap-1">
+                                            <span className="truncate max-w-[80px] sm:max-w-none">{currentPieceSkinInfo?.name || activePieceSkin}</span>
                                             <span className="text-slate-600">•</span>
-                                            <span className="text-cyan-400">{currentBoardSkinInfo?.name.split(' ')[0] || 'Board'}</span>
+                                            <span className="text-cyan-400 truncate max-w-[70px] sm:max-w-none">{currentBoardSkinInfo?.name.split(' ')[0] || 'Board'}</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* OWNED INVENTORY SELECTOR (ONLY OWNED SKINS & BOARDS) */}
-                                <div className="p-3 sm:p-4 rounded-2xl bg-slate-900/80 border border-white/10 shadow-lg backdrop-blur-md space-y-3">
+                                {/* MOBILE TACTICAL CONTROLS & TABS (MOBILE ONLY) */}
+                                <div className="lg:hidden w-full space-y-2.5 pt-1">
+                                    {/* Coach Live Commentary banner on mobile */}
+                                    <div className="p-2.5 rounded-xl bg-slate-900/95 border border-white/10 shadow-md flex items-center gap-2 text-xs text-slate-200">
+                                        <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
+                                        <p className="truncate leading-relaxed font-sans">{latestComment || 'Game in progress. Make your move on the board.'}</p>
+                                    </div>
+
+                                    {/* Mobile Segmented Tab Selector */}
+                                    <div className="flex items-center p-1 rounded-xl bg-slate-900/90 border border-white/10 shadow-lg gap-1">
+                                        <button
+                                            onClick={() => setMobileActiveTab('moves')}
+                                            className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                                                mobileActiveTab === 'moves'
+                                                    ? 'bg-amber-500 text-slate-950 shadow-sm'
+                                                    : 'text-slate-400 hover:text-white'
+                                            }`}
+                                        >
+                                            <Layers className="w-3.5 h-3.5" />
+                                            <span>Moves ({historySAN.length})</span>
+                                        </button>
+                                        <button
+                                            onClick={() => setMobileActiveTab('console')}
+                                            className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                                                mobileActiveTab === 'console'
+                                                    ? 'bg-amber-500 text-slate-950 shadow-sm'
+                                                    : 'text-slate-400 hover:text-white'
+                                            }`}
+                                        >
+                                            {gameMode === 'scenario' ? <BookOpen className="w-3.5 h-3.5" /> : <Gamepad2 className="w-3.5 h-3.5" />}
+                                            <span>{gameMode === 'scenario' ? 'Openings' : 'AI Level'}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => setMobileActiveTab('skins')}
+                                            className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                                                mobileActiveTab === 'skins'
+                                                    ? 'bg-amber-500 text-slate-950 shadow-sm'
+                                                    : 'text-slate-400 hover:text-white'
+                                            }`}
+                                        >
+                                            <Crown className="w-3.5 h-3.5" />
+                                            <span>Skins</span>
+                                        </button>
+                                    </div>
+
+                                    {/* Mobile Tab 1: MOVES LOG */}
+                                    {mobileActiveTab === 'moves' && (
+                                        <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 space-y-2.5 shadow-lg">
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-bold uppercase text-slate-300 flex items-center gap-1.5 tracking-wider">
+                                                    <Layers className="w-3.5 h-3.5 text-purple-400" />
+                                                    <span>Moves History ({historySAN.length} plies)</span>
+                                                </span>
+                                                <button
+                                                    onClick={copyPGN}
+                                                    className="px-2 py-1 rounded-lg bg-slate-800 text-[11px] font-semibold text-slate-300 flex items-center gap-1 hover:text-white cursor-pointer"
+                                                >
+                                                    {pgnCopied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                                                    <span>{pgnCopied ? 'Copied' : 'Copy PGN'}</span>
+                                                </button>
+                                            </div>
+                                            <div className="bg-slate-950 rounded-lg border border-slate-800/80 p-2 max-h-48 overflow-y-auto font-mono text-xs space-y-1">
+                                                {moveLog.length === 0 ? (
+                                                    <div className="text-slate-500 text-center py-6 italic">
+                                                        No moves yet. Make your first move on the board.
+                                                    </div>
+                                                ) : (
+                                                    <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                                                        {Array.from({ length: Math.ceil(moveLog.length / 2) }).map((_, roundIdx) => {
+                                                            const whiteMove = moveLog[roundIdx * 2];
+                                                            const blackMove = moveLog[roundIdx * 2 + 1];
+
+                                                            return (
+                                                                <React.Fragment key={roundIdx}>
+                                                                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-900/80 text-slate-200 border border-slate-800/40">
+                                                                        <span className="text-slate-500 text-[10px] w-4">{roundIdx + 1}.</span>
+                                                                        <span className="font-bold text-amber-300 flex items-center gap-0.5">
+                                                                            {whiteMove?.san}
+                                                                            {whiteMove?.isCapture && <span className="text-[8px] text-rose-400 font-bold">x</span>}
+                                                                            {whiteMove?.isCheck && <span className="text-[8px] text-amber-400 font-bold">+</span>}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-900/40 text-slate-300 border border-slate-800/20">
+                                                                        <span className="font-bold text-indigo-300 flex items-center gap-0.5">
+                                                                            {blackMove ? blackMove.san : '...'}
+                                                                            {blackMove?.isCapture && <span className="text-[8px] text-rose-400 font-bold">x</span>}
+                                                                            {blackMove?.isCheck && <span className="text-[8px] text-indigo-400 font-bold">+</span>}
+                                                                        </span>
+                                                                    </div>
+                                                                </React.Fragment>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Mobile Tab 2: CONSOLE (SCENARIOS OR AI SETTINGS) */}
+                                    {mobileActiveTab === 'console' && (
+                                        <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 space-y-3 shadow-lg">
+                                            {gameMode === 'freeplay' ? (
+                                                <div className="space-y-3">
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-xs font-bold text-cyan-400 flex items-center gap-1.5 uppercase">
+                                                            <Gamepad2 className="w-3.5 h-3.5" />
+                                                            <span>AI Engine Level</span>
+                                                        </span>
+                                                        <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                                                            +50 Coins / Win
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="grid grid-cols-3 gap-1.5">
+                                                        {[
+                                                            { id: 'casual', label: 'Casual', elo: '~1000' },
+                                                            { id: 'club', label: 'Club', elo: '~1500' },
+                                                            { id: 'master', label: 'Master', elo: '~1900+' },
+                                                        ].map(d => (
+                                                            <button
+                                                                key={d.id}
+                                                                onClick={() => {
+                                                                    setDifficulty(d.id as AIDifficulty);
+                                                                    initFreePlay(playerColor, d.id as AIDifficulty);
+                                                                }}
+                                                                className={`p-2 rounded-xl text-center border transition-all cursor-pointer active:scale-95 ${
+                                                                    difficulty === d.id
+                                                                        ? 'bg-slate-800 border-amber-400 shadow-sm'
+                                                                        : 'bg-slate-950 border-slate-800 text-slate-400'
+                                                                }`}
+                                                            >
+                                                                <div className="text-xs font-bold text-white">{d.label}</div>
+                                                                <div className="text-[10px] text-amber-400 font-mono">{d.elo}</div>
+                                                            </button>
+                                                        ))}
+                                                    </div>
+
+                                                    <div className="space-y-1">
+                                                        <label className="text-[11px] font-semibold text-slate-400">Play As Color:</label>
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <button
+                                                                onClick={() => {
+                                                                    setPlayerColor('white');
+                                                                    initFreePlay('white', difficulty);
+                                                                }}
+                                                                className={`p-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer ${
+                                                                    playerColor === 'white'
+                                                                        ? 'bg-amber-500 text-slate-950 border-amber-400'
+                                                                        : 'bg-slate-950 border-slate-800 text-slate-300'
+                                                                }`}
+                                                            >
+                                                                <Crown className="w-3.5 h-3.5" />
+                                                                <span>White (First)</span>
+                                                            </button>
+                                                            <button
+                                                                onClick={() => {
+                                                                    setPlayerColor('black');
+                                                                    initFreePlay('black', difficulty);
+                                                                }}
+                                                                className={`p-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer ${
+                                                                    playerColor === 'black'
+                                                                        ? 'bg-indigo-600 text-white border-indigo-400'
+                                                                        : 'bg-slate-950 border-slate-800 text-slate-300'
+                                                                }`}
+                                                            >
+                                                                <Shield className="w-3.5 h-3.5" />
+                                                                <span>Black (Counter)</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className="space-y-2">
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-xs font-bold uppercase text-amber-400 flex items-center gap-1.5">
+                                                            <BookOpen className="w-3.5 h-3.5" />
+                                                            <span>Opening Library</span>
+                                                        </span>
+                                                        <span className="text-[11px] text-slate-400 font-mono">{scenarios.length} Openings</span>
+                                                    </div>
+
+                                                    <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1">
+                                                        {scenarios.map(sc => (
+                                                            <button
+                                                                key={sc.id}
+                                                                onClick={() => initScenario(sc)}
+                                                                className={`w-full text-left p-2 rounded-xl border transition-all flex items-center justify-between gap-2 cursor-pointer active:scale-98 ${
+                                                                    selectedScenario.id === sc.id
+                                                                        ? 'bg-amber-500/15 border-amber-500/60 text-white shadow-inner'
+                                                                        : 'bg-slate-950 border-slate-800 text-slate-300'
+                                                                }`}
+                                                            >
+                                                                <div className="min-w-0">
+                                                                    <div className="flex items-center gap-1.5">
+                                                                        <span className="font-bold text-xs text-white truncate">{sc.name}</span>
+                                                                        <span className="text-[8px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 uppercase shrink-0">
+                                                                            {sc.category}
+                                                                        </span>
+                                                                    </div>
+                                                                    <p className="text-[10px] text-slate-400 mt-0.5 truncate">
+                                                                        {sc.description}
+                                                                    </p>
+                                                                </div>
+                                                                {selectedScenario.id === sc.id && (
+                                                                    <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0 shadow-sm" />
+                                                                )}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Mobile Tab 3: SKINS & BOARDS (OWNED) */}
+                                    {mobileActiveTab === 'skins' && (
+                                        <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 space-y-2.5 shadow-lg">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-1 p-1 rounded-lg bg-slate-950 border border-slate-800">
+                                                    <button
+                                                        onClick={() => setCustomizerTab('pieces')}
+                                                        className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                                                            customizerTab === 'pieces'
+                                                                ? 'bg-amber-500 text-slate-950 font-black'
+                                                                : 'text-slate-400'
+                                                        }`}
+                                                    >
+                                                        Piece Sets ({ownedPiecesList.length})
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setCustomizerTab('boards')}
+                                                        className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                                                            customizerTab === 'boards'
+                                                                ? 'bg-cyan-500 text-slate-950 font-black'
+                                                                : 'text-slate-400'
+                                                        }`}
+                                                    >
+                                                        Board Themes ({ownedBoardsList.length})
+                                                    </button>
+                                                </div>
+
+                                                <Link
+                                                    href={customizerTab === 'pieces' ? '/shop' : '/shop?tab=boards'}
+                                                    className="text-[11px] text-amber-400 hover:underline flex items-center gap-0.5 font-semibold"
+                                                >
+                                                    <span>Store</span>
+                                                    <ArrowUpRight className="w-3 h-3" />
+                                                </Link>
+                                            </div>
+
+                                            {customizerTab === 'pieces' ? (
+                                                <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto">
+                                                    {ownedPiecesList.map(skin => (
+                                                        <button
+                                                            key={skin.slug}
+                                                            onClick={() => handleEquipPiece(skin.slug)}
+                                                            className={`relative p-2 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer active:scale-95 ${
+                                                                activePieceSkin === skin.slug
+                                                                    ? 'bg-slate-800 border-amber-400 ring-1 ring-amber-400 shadow-sm'
+                                                                    : 'bg-slate-950 border-slate-800'
+                                                            }`}
+                                                        >
+                                                            {activePieceSkin === skin.slug && (
+                                                                <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-amber-400" />
+                                                            )}
+                                                            <div className="w-7 h-7 flex items-center justify-center">
+                                                                <img
+                                                                    src={`/skins/${skin.slug}/wK.svg`}
+                                                                    alt={skin.name}
+                                                                    className="w-full h-full object-contain"
+                                                                />
+                                                            </div>
+                                                            <div className="text-[9px] font-bold text-slate-200 truncate max-w-[70px]">
+                                                                {skin.name}
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto">
+                                                    {ownedBoardsList.map(board => (
+                                                        <button
+                                                            key={board.slug}
+                                                            onClick={() => handleEquipBoard(board.slug)}
+                                                            className={`relative p-2 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer active:scale-95 ${
+                                                                activeBoardSkin === board.slug
+                                                                    ? 'bg-slate-800 border-cyan-400 ring-1 ring-cyan-400 shadow-sm'
+                                                                    : 'bg-slate-950 border-slate-800'
+                                                            }`}
+                                                        >
+                                                            {activeBoardSkin === board.slug && (
+                                                                <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                                                            )}
+                                                            <div className="w-7 h-7 rounded overflow-hidden border border-slate-700 grid grid-cols-2">
+                                                                <div style={{ backgroundColor: board.light }} />
+                                                                <div style={{ backgroundColor: board.dark }} />
+                                                                <div style={{ backgroundColor: board.dark }} />
+                                                                <div style={{ backgroundColor: board.light }} />
+                                                            </div>
+                                                            <div className="text-[9px] font-bold text-slate-200 truncate max-w-[70px]">
+                                                                {board.name.replace('Board', '')}
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* OWNED INVENTORY SELECTOR (DESKTOP ONLY) */}
+                                <div className="hidden lg:block p-3 sm:p-4 rounded-2xl bg-slate-900/80 border border-white/10 shadow-lg backdrop-blur-md space-y-3">
                                     <div className="flex items-center justify-between">
                                         {/* Dual Tab Switcher */}
                                         <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-950 border border-slate-800">
@@ -1148,8 +1464,8 @@ export default function Play({
                             </div>
                         </div>
 
-                        {/* RIGHT COLUMN: TACTICAL CONTROL CONSOLE */}
-                        <div className="lg:col-span-5 xl:col-span-5 space-y-4">
+                        {/* RIGHT COLUMN: TACTICAL CONTROL CONSOLE (DESKTOP ONLY) */}
+                        <div className="hidden lg:block lg:col-span-5 xl:col-span-5 space-y-4">
                             {/* ARENA CONFIGURATION CARD */}
                             {gameMode === 'freeplay' ? (
                                 <div className="p-5 rounded-2xl bg-slate-900/90 border border-white/10 shadow-xl backdrop-blur-md space-y-4">

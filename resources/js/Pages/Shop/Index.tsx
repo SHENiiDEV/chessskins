@@ -99,22 +99,24 @@ export default function Index({ skins }: ShopIndexProps) {
                     </div>
 
                     {/* Balance Card */}
-                    <div className="bg-slate-950 border border-amber-500/30 rounded-2xl p-5 shrink-0 flex items-center gap-5 shadow-lg shadow-amber-500/5">
-                        <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
-                            <Coins className="w-6 h-6" />
-                        </div>
-                        <div>
-                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                                Your Balance
+                    <div className="bg-slate-950 border border-amber-500/30 rounded-2xl p-4 sm:p-5 shrink-0 flex items-center justify-between sm:justify-start gap-4 sm:gap-5 shadow-lg shadow-amber-500/5 w-full md:w-auto">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                                <Coins className="w-5 h-5 sm:w-6 sm:h-6" />
                             </div>
-                            <div className="text-2xl font-black text-amber-300">
-                                {userBalance.toLocaleString()}{' '}
-                                <span className="text-xs font-medium text-slate-400">Coins</span>
+                            <div>
+                                <div className="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                    Your Balance
+                                </div>
+                                <div className="text-xl sm:text-2xl font-black text-amber-300">
+                                    {userBalance.toLocaleString()}{' '}
+                                    <span className="text-xs font-medium text-slate-400">Coins</span>
+                                </div>
                             </div>
                         </div>
                         <Link
                             href="/topup"
-                            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-amber-500/20 transition group"
+                            className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-amber-500/20 transition group shrink-0 active:scale-95"
                         >
                             <PlusCircle className="w-4 h-4 group-hover:rotate-90 transition-transform" />
                             <span>Top Up</span>
@@ -123,21 +125,21 @@ export default function Index({ skins }: ShopIndexProps) {
                 </div>
 
                 {/* Filters */}
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
-                    <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0 flex-nowrap">
                         <button
                             onClick={() => setFilter('all')}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 active:scale-95 ${
                                 filter === 'all'
                                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
                             }`}
                         >
-                            All Items ({skins.length})
+                            All ({skins.length})
                         </button>
                         <button
                             onClick={() => setFilter('piece')}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
+                            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 active:scale-95 ${
                                 filter === 'piece'
                                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -148,7 +150,7 @@ export default function Index({ skins }: ShopIndexProps) {
                         </button>
                         <button
                             onClick={() => setFilter('board')}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
+                            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 active:scale-95 ${
                                 filter === 'board'
                                     ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
                                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -159,7 +161,7 @@ export default function Index({ skins }: ShopIndexProps) {
                         </button>
                         <button
                             onClick={() => setFilter('owned')}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
+                            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 active:scale-95 ${
                                 filter === 'owned'
                                     ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
                                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -172,7 +174,7 @@ export default function Index({ skins }: ShopIndexProps) {
 
                     <Link
                         href="/play"
-                        className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5"
+                        className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 self-end sm:self-auto pt-1 sm:pt-0"
                     >
                         <span>Play on Board</span>
                         <span>→</span>
@@ -363,36 +365,36 @@ export default function Index({ skins }: ShopIndexProps) {
 
             {/* Complete 12-Piece Set Preview Modal */}
             {previewSkin && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-                    <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-6">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md">
+                    <div className="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl space-y-4 sm:space-y-6 max-h-[90vh] overflow-y-auto">
                         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                             <div>
-                                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                                     <span>Full Set: {previewSkin.name}</span>
                                     <span className="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-normal">
                                         12 SVG Files
                                     </span>
                                 </h3>
-                                <p className="text-xs text-slate-400 mt-0.5">Path: /skins/{previewSkin.slug}/[piece].svg</p>
+                                <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5">Path: /skins/{previewSkin.slug}/[piece].svg</p>
                             </div>
                             <button
                                 onClick={() => setPreviewSkin(null)}
-                                className="text-slate-400 hover:text-white p-1 cursor-pointer"
+                                className="text-slate-400 hover:text-white p-1.5 cursor-pointer text-sm"
                             >
                                 ✕
                             </button>
                         </div>
 
                         {/* White pieces */}
-                        <div className="space-y-2">
+                        <div className="space-y-1.5">
                             <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">White Pieces</div>
-                            <div className="grid grid-cols-6 gap-2 p-3 rounded-2xl bg-slate-950 border border-slate-800">
+                            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 p-2.5 sm:p-3 rounded-2xl bg-slate-950 border border-slate-800">
                                 {['wK', 'wQ', 'wR', 'wB', 'wN', 'wP'].map((piece) => (
-                                    <div key={piece} className="flex flex-col items-center p-2 rounded-lg hover:bg-slate-900 transition">
+                                    <div key={piece} className="flex flex-col items-center p-1.5 sm:p-2 rounded-lg hover:bg-slate-900 transition">
                                         <img
                                             src={`/skins/${previewSkin.slug}/${piece}.svg`}
                                             alt={piece}
-                                            className="w-10 h-10 object-contain"
+                                            className="w-9 h-9 sm:w-10 sm:h-10 object-contain"
                                         />
                                         <span className="text-[10px] font-mono text-slate-500 mt-1">{piece}.svg</span>
                                     </div>
@@ -401,15 +403,15 @@ export default function Index({ skins }: ShopIndexProps) {
                         </div>
 
                         {/* Black pieces */}
-                        <div className="space-y-2">
+                        <div className="space-y-1.5">
                             <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Black Pieces</div>
-                            <div className="grid grid-cols-6 gap-2 p-3 rounded-2xl bg-slate-950 border border-slate-800">
+                            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 p-2.5 sm:p-3 rounded-2xl bg-slate-950 border border-slate-800">
                                 {['bK', 'bQ', 'bR', 'bB', 'bN', 'bP'].map((piece) => (
-                                    <div key={piece} className="flex flex-col items-center p-2 rounded-lg hover:bg-slate-900 transition">
+                                    <div key={piece} className="flex flex-col items-center p-1.5 sm:p-2 rounded-lg hover:bg-slate-900 transition">
                                         <img
                                             src={`/skins/${previewSkin.slug}/${piece}.svg`}
                                             alt={piece}
-                                            className="w-10 h-10 object-contain"
+                                            className="w-9 h-9 sm:w-10 sm:h-10 object-contain"
                                         />
                                         <span className="text-[10px] font-mono text-slate-500 mt-1">{piece}.svg</span>
                                     </div>
@@ -423,7 +425,7 @@ export default function Index({ skins }: ShopIndexProps) {
                             </span>
                             <button
                                 onClick={() => setPreviewSkin(null)}
-                                className="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs cursor-pointer"
+                                className="px-4 sm:px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs cursor-pointer active:scale-95"
                             >
                                 Close Preview
                             </button>

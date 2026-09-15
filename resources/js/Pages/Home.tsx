@@ -109,17 +109,17 @@ export default function Home({ skins, scenarios }: HomeProps) {
                         <div className="lg:col-span-5 flex flex-col items-center">
                             <div className="w-full max-w-[420px] p-3 rounded-2xl bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700/80 shadow-2xl shadow-cyan-950/40 relative group">
                                 {/* Skin Switcher Badges */}
-                                <div className="flex items-center justify-between gap-1 pb-3 px-1">
-                                    <span className="text-xs font-semibold text-slate-400 flex items-center gap-1">
+                                <div className="flex items-center justify-between gap-2 pb-3 px-1">
+                                    <span className="text-xs font-semibold text-slate-400 flex items-center gap-1 shrink-0">
                                         <Sparkles className="w-3 h-3 text-amber-400" />
-                                        Board Theme:
+                                        <span className="hidden xs:inline">Board </span>Theme:
                                     </span>
-                                    <div className="flex items-center gap-1 flex-wrap justify-end">
+                                    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 justify-end">
                                         {['neon', 'obsidian', 'medieval', 'steampunk', 'arcade', 'cyberpunk', 'cosmic', 'default'].map((skin) => (
                                             <button
                                                 key={skin}
                                                 onClick={() => setSelectedSkinSlug(skin)}
-                                                className={`px-1.5 py-0.5 rounded text-[10px] font-semibold capitalize transition cursor-pointer ${
+                                                className={`px-1.5 py-0.5 rounded text-[10px] font-semibold capitalize transition cursor-pointer shrink-0 ${
                                                     selectedSkinSlug === skin
                                                         ? 'bg-amber-500 text-slate-950 shadow-sm font-bold'
                                                         : 'bg-slate-950/70 text-slate-400 hover:text-white'
@@ -129,7 +129,6 @@ export default function Home({ skins, scenarios }: HomeProps) {
                                             </button>
                                         ))}
                                     </div>
-
                                 </div>
 
                                 {/* Actual Chessboard with Custom Skin & Board Palette */}
@@ -256,10 +255,10 @@ export default function Home({ skins, scenarios }: HomeProps) {
                     </div>
 
                     {/* Showcase Filter Tabs */}
-                    <div className="flex flex-wrap items-center gap-2 mb-8">
+                    <div className="flex items-center gap-2 mb-8 overflow-x-auto no-scrollbar pb-1">
                         <button
                             onClick={() => setShowcaseFilter('all')}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
                                 showcaseFilter === 'all'
                                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -269,7 +268,7 @@ export default function Home({ skins, scenarios }: HomeProps) {
                         </button>
                         <button
                             onClick={() => setShowcaseFilter('piece')}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
+                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 ${
                                 showcaseFilter === 'piece'
                                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -280,7 +279,7 @@ export default function Home({ skins, scenarios }: HomeProps) {
                         </button>
                         <button
                             onClick={() => setShowcaseFilter('board')}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
+                            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 ${
                                 showcaseFilter === 'board'
                                     ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
                                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'

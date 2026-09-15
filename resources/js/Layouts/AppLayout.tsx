@@ -11,7 +11,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
     return (
         <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-amber-500 selection:text-slate-950">
             <Navbar />
-            <main className="flex-1">
+            <main className="flex-1 pb-20 md:pb-0">
                 {children}
             </main>
             <Footer />
