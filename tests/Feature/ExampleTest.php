@@ -21,4 +21,19 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * Test all informational and guide routes return 200 OK.
+     */
+    public function test_guide_and_information_pages_return_ok(): void
+    {
+        $this->seed(SkinSeeder::class);
+
+        $this->get('/how-it-works')->assertStatus(200);
+        $this->get('/fair-play')->assertStatus(200);
+        $this->get('/security')->assertStatus(200);
+        $this->get('/faq')->assertStatus(200);
+        $this->get('/terms')->assertStatus(200);
+        $this->get('/privacy')->assertStatus(200);
+    }
 }

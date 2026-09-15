@@ -8,12 +8,16 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-// Public Pages
+// Public Pages & Guides
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/play', [PageController::class, 'play'])->name('play');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/how-it-works', [PageController::class, 'howItWorks'])->name('how-it-works');
+Route::get('/fair-play', [PageController::class, 'fairPlay'])->name('fair-play');
+Route::get('/security', [PageController::class, 'security'])->name('security');
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');
 
 // Predictable Bot API
 Route::post('/bot/move', [BotController::class, 'processMove'])->name('bot.move');

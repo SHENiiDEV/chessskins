@@ -7,6 +7,8 @@ import { Coins, Home as HomeIcon, LogOut, Menu, Plus, ShoppingBag, Swords, User 
 const NAV_LINKS = [
     { href: '/play', label: 'Training' },
     { href: '/shop', label: 'Skins' },
+    { href: '/how-it-works', label: 'How It Works' },
+    { href: '/faq', label: 'FAQ' },
     { href: '/topup', label: 'Top up' },
 ];
 

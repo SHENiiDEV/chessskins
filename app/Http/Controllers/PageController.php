@@ -124,4 +124,36 @@ class PageController extends Controller
     {
         return Inertia::render('Legal/Privacy');
     }
+
+    /**
+     * Display How It Works and Training Engine Guide.
+     */
+    public function howItWorks(): Response
+    {
+        return Inertia::render('Articles/HowItWorks');
+    }
+
+    /**
+     * Display Fair Play, RNG Determinism and Engine Rules.
+     */
+    public function fairPlay(): Response
+    {
+        return Inertia::render('Articles/FairPlay');
+    }
+
+    /**
+     * Display Security, Billing, and PCI-DSS Compliance.
+     */
+    public function security(): Response
+    {
+        return Inertia::render('Articles/Security');
+    }
+
+    /**
+     * Display Help Center & Frequently Asked Questions.
+     */
+    public function faq(): Response
+    {
+        return Inertia::render('Articles/Faq');
+    }
 }

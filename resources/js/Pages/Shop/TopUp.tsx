@@ -284,6 +284,23 @@ export default function TopUp({ packages, billingData }: TopUpProps) {
                                     </>
                                 )}
                             </button>
+
+                            <div className="pt-2 flex flex-col items-center gap-2">
+                                <div className="flex items-center justify-center gap-2.5">
+                                    <div className="h-7 px-2.5 bg-white rounded-md flex items-center justify-center shadow-sm" title="Visa Secure">
+                                        <img src="/images/badges/visa.png" alt="Visa" className="h-4 w-auto object-contain" />
+                                    </div>
+                                    <div className="h-7 px-2.5 bg-white rounded-md flex items-center justify-center shadow-sm" title="Mastercard Identity Check">
+                                        <img src="/images/badges/mastercard.png" alt="Mastercard" className="h-4 w-auto object-contain" />
+                                    </div>
+                                    <div className="h-7 px-2.5 bg-white rounded-md flex items-center justify-center shadow-sm" title="PCI-DSS Compliant">
+                                        <img src="/images/badges/pci-dss.png" alt="PCI DSS" className="h-4 w-auto object-contain" />
+                                    </div>
+                                </div>
+                                <div className="text-[11px] text-slate-500 text-center">
+                                    Encrypted via 256-bit SSL • 3D Secure 2.0 • <Link href="/security" className="text-amber-400 hover:underline">Security Standards</Link>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
