@@ -92,7 +92,7 @@ export default function Security() {
 
                 <div className="p-8 sm:p-12 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-10 text-sm text-slate-300 leading-relaxed">
                     {/* 1. PCI-DSS Compliance & Card Data Safety */}
-                    <section className="space-y-4">
+                    <section id="pci" className="space-y-4 scroll-mt-24">
                         <div className="flex items-center gap-2.5 text-white font-bold text-lg">
                             <Lock className="w-5 h-5 text-amber-400" />
                             <h3>1. PCI Data Security Standard (PCI-DSS) Architecture</h3>
@@ -118,7 +118,7 @@ export default function Security() {
                     </section>
 
                     {/* 2. 3D Secure 2.0 (3DS) Fraud Shield */}
-                    <section className="space-y-4">
+                    <section id="3ds" className="space-y-4 scroll-mt-24">
                         <div className="flex items-center gap-2.5 text-white font-bold text-lg">
                             <KeyRound className="w-5 h-5 text-cyan-400" />
                             <h3>2. Visa Secure & Mastercard 3D Secure (3DS 2.0)</h3>
@@ -134,7 +134,7 @@ export default function Security() {
                     </section>
 
                     {/* 3. KYC and Billing Address Verification */}
-                    <section className="space-y-4">
+                    <section id="kyc" className="space-y-4 scroll-mt-24">
                         <div className="flex items-center gap-2.5 text-white font-bold text-lg">
                             <UserCheck className="w-5 h-5 text-emerald-400" />
                             <h3>3. Why We Require Full KYC Billing Information</h3>
@@ -155,7 +155,7 @@ export default function Security() {
                     </section>
 
                     {/* 4. Automated PDF Invoicing */}
-                    <section className="space-y-4">
+                    <section id="invoicing" className="space-y-4 scroll-mt-24">
                         <div className="flex items-center gap-2.5 text-white font-bold text-lg">
                             <FileText className="w-5 h-5 text-purple-400" />
                             <h3>4. Automated Electronic VAT Invoices</h3>
@@ -171,7 +171,7 @@ export default function Security() {
                     </section>
 
                     {/* 5. Refunds & Consumer Rights */}
-                    <section className="space-y-4">
+                    <section id="refunds" className="space-y-4 scroll-mt-24">
                         <div className="flex items-center gap-2.5 text-white font-bold text-lg">
                             <RefreshCw className="w-5 h-5 text-amber-400" />
                             <h3>5. Refund & Cancellation Terms</h3>
